@@ -1,0 +1,25 @@
+.home-main-container {
+    display: flex;
+    margin: 8rem 2rem 0;
+}
+.home-add-todo-container {
+    width: 40%;
+}
+.home-todo-list-container {
+    width: 60%;
+    margin-left: 20px;
+}
+@media (max-width: 800px) {
+    .home-main-container {
+        display: block;
+        margin-top: 5rem;
+    }
+    .home-add-todo-container {
+        width: 100%;
+    }
+    .home-todo-list-container {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}
