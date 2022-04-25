@@ -3,8 +3,8 @@ import Container from '@mui/material/Container'
 import { makeStyles } from '@mui/styles';
 import { Button, TextField } from '@mui/material';
 import { createTheme } from '@mui/system';
-import { postToDoAPI } from './AddTodoApi/AddTodoApi';
-import { isAuthenticated } from '../../Auth/SignIn/SignInAPI/signInAPI';
+import { putToDoAPI } from './EditTodoAPI/EditTodoAPI';
+import { isAuthenticated } from '../Auth/SignIn/SignInAPI/signInAPI';
 
 let theme = createTheme();
 
@@ -15,6 +15,7 @@ const useStyles = makeStyles({
     padding:"20px",
     paddingBottom:"40px",
     boxShadow: "#3b3b3b 0px 4px 12px 0px",
+    marginTop:"5rem"
   },
   textField: {
     marginTop: "30px",
@@ -42,10 +43,13 @@ const useStyles = makeStyles({
   }
 })
 
-const AddTodo = () => {
+const EditTodo = (props) => {
 
+  const { history } = props
+  const { token } = isAuthenticated();
   const userId = isAuthenticated().user._id;
-  const {token} = isAuthenticated();
+  const todoId = props.match.params.todoId
+  console.log(todoId)
   const [values, setValues] = useState({
     title: "",
     description: "",
@@ -67,19 +71,24 @@ const AddTodo = () => {
     })
   }
 
-  const clickSubmit = (event) => {
+  const clickSubmit = (e) => {
+      e.preventDefault()
     setValues({
       ...values,
       loading: true
     });
-    postToDoAPI(userId, token, {
+    putToDoAPI(userId, todoId, token, {
       title,
       description,
       date,
       time,
       location,
     }).then((res) => {
-      console.log(res)
+      console.log(res);
+      history.push("/")
+    })
+    .catch((err)=> {
+        console.log(err)
     })
   }
 
@@ -180,13 +189,12 @@ const AddTodo = () => {
         <Button
          type="submit"
          variant='contained' 
-         fullWidth
          className={classes.btn}
          onClick={clickSubmit}
-        >Save ToDo</Button>
+        >Update ToDo</Button>
       </form>
     </Container>
   )
 }
 
-export default AddTodo
+export default EditTodo

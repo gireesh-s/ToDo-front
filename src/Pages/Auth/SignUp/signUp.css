@@ -1,0 +1,26 @@
+.signup-main-container {
+    display: block;
+    margin-top: 8rem;
+    justify-content: center;
+}
+.signup-sub-container {
+    width: 40%;
+    margin: auto;
+}
+.signup-main-container .signup-sub-container h1 {
+    font-weight: 1;
+    color: white;
+}
+@media (max-width:1200px) {
+    .signup-sub-container {
+        width: 60%;
+    }
+}
+@media (max-width:750px) {
+    .signup-sub-container {
+        width: 90%;
+    }
+    .signup-main-container {
+        margin-top: 7rem;
+    }
+}

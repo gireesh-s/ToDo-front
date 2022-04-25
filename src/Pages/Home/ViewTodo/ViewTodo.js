@@ -1,11 +1,12 @@
-import { Box, Container, Grid, IconButton, TextField, Typography } from '@mui/material'
+import { Box, Container, IconButton, TextField, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles';
-import { createTheme } from '@mui/system';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import React from 'react'
-
-const theme = createTheme();
+import React, { useEffect, useState } from 'react'
+import { deleteToDoAPI, getToDoAPI } from '../AddTodo/AddTodoApi/AddTodoApi';
+import { isAuthenticated } from '../../Auth/SignIn/SignInAPI/signInAPI';
+import moment from 'moment'
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   container: {
@@ -14,6 +15,15 @@ const useStyles = makeStyles({
   search: {
     margin:"0 0 10px 10px",
     backgroundColor:"#dedede",
+  },
+  boxContainer: {
+    height:"520px",
+    overflow:"hidden",
+    display:"inherit",
+    position:"relative",
+    transition: "transform 0.5s ease-out 0s",
+    overflowY:"auto",
+    paddingBottom:"25px"
   },
   box: {
     backgroundColor:"#dedede",
@@ -25,11 +35,13 @@ const useStyles = makeStyles({
   },
   title: {
     textAlign:"center",
-    marginTop:"5px"
+    marginTop:"5px",
+    fontSize:"1.3rem"
   },
   desc: {
     width:"100%",
-    marginTop:"8px"
+    marginTop:"8px",
+    fontSize:"1rem"
   },
   ldtContainer: {
     margin:"auto",
@@ -44,47 +56,67 @@ const useStyles = makeStyles({
 
 const ViewTodo = () => {
 
+  const { token } = isAuthenticated();
+  const userId = isAuthenticated().user._id
+  const [toDoList, setToDoList] = useState([])
   const classes = useStyles();
+
+  const getTodo = () => {
+    getToDoAPI( userId, token )
+    .then((res) => {
+      const { data } = res;
+      setToDoList(data)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  useEffect(() => {
+    getTodo();
+  }, [])
+
+  const deleteToDo = (todoId) => {
+    deleteToDoAPI(userId, todoId, token)
+    .then((res)=>{
+      console.log(res)
+      getTodo();
+    })
+  }
 
   return (
     <Container className={classes.container}>
       <TextField label="Search" variant='filled' size='small' fullWidth className={classes.search}/>
-      <Box className={classes.box}>
-        <Typography variant='h5' className={classes.title}>Title</Typography>
-        <Typography variant='h6' className={classes.desc}>Description</Typography>
-        <div className={classes.ldtContainer}>
-          <Typography>Location</Typography>
-          <div className={classes.dtContainer}>
-            <Typography>Date</Typography>
-            <Typography sx={{marginLeft:"10px"}}>Time</Typography>
-          </div>
-          <IconButton>
-            <EditIcon/>
-          </IconButton>
-          <IconButton>
-            <DeleteIcon/>
-          </IconButton>
-        </div>
-      </Box>
-      {/* ---------------------------------------------------- */}
-      <Box className={classes.box}>
-        <Typography variant='h5' className={classes.title}>Title</Typography>
-        <Typography variant='h6' className={classes.desc}>Description</Typography>
-        <div className={classes.ldtContainer}>
-          <Typography>Location</Typography>
-          <div className={classes.dtContainer}>
-            <Typography>Date</Typography>
-            <Typography sx={{marginLeft:"10px"}}>Time</Typography>
-          </div>
-          <IconButton>
-            <EditIcon/>
-          </IconButton>
-          <IconButton>
-            <DeleteIcon/>
-          </IconButton>
-        </div>
-      </Box>
-      {/* ------------------------------------------------------------ */}
+      <Container className={classes.boxContainer}>
+      {
+        toDoList.map((value)=>{
+          let formattedDate = moment(value.date).format('DD/MM/YYYY')
+          return (
+            <Box className={classes.box}>
+              <Typography variant='h5' className={classes.title}>{value.title}</Typography>
+              <Typography variant='h6' className={classes.desc}>{value.description}</Typography>
+              <div className={classes.ldtContainer}>
+                <Typography>{value.location}</Typography>
+                <div className={classes.dtContainer}>
+                  <Typography>{formattedDate}</Typography>
+                  <Typography sx={{marginLeft:"10px"}}>{value.time}</Typography>
+                </div>
+                <Link to={`/edit/${value._id}`}>
+                  <IconButton>
+                    <EditIcon/>
+                  </IconButton>
+                </Link>
+                <IconButton
+                  onClick={() => deleteToDo(value._id)}
+                >
+                  <DeleteIcon/>
+                </IconButton>
+              </div>
+            </Box>
+          )
+        })
+      }
+      </Container>
     </Container>
   )
 }
