@@ -9,7 +9,7 @@
 }
 .signin-main-container .signin-sub-container h1 {
     font-weight: 1;
-    color: white;
+    color: black;
 }
 @media (max-width:1200px) {
     .signin-sub-container {

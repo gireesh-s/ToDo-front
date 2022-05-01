@@ -9,25 +9,25 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const UseStyles = makeStyles({
   mainContainer: {
-    backgroundColor: "#919191",
+    backgroundColor: "#f7a684",
     borderRadius:"10px",
     padding:"20px",
     paddingBottom:"40px",
-    boxShadow: "#3b3b3b 0px 4px 12px 0px",
+    boxShadow: "#f7a684 0px 4px 12px 0px",
   },
   textField: {
     marginTop: "30px",
-    backgroundColor:"#ebebeb",
+    backgroundColor:"white",
     borderRadius:"7px",
   },
   btn: {
     marginTop: "30px",
     height:"3rem",
     borderRadius:"7px",
-    backgroundColor:"#4a4a4a",
+    backgroundColor:"#dd4100",
     textTransform:"none",
     "&:hover":{
-      backgroundColor:"#3b3b3b"
+      backgroundColor:"#ff4b00"
     }
   }
 })

@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
   search: {
     margin:"0 0 10px 10px",
-    backgroundColor:"#dedede",
+    backgroundColor:"white",
   },
   boxContainer: {
     height:"520px",
@@ -26,12 +26,13 @@ const useStyles = makeStyles({
     paddingBottom:"25px"
   },
   box: {
-    backgroundColor:"#dedede",
+    backgroundColor:"#f7a684",
     width:"100%",
     borderRadius:"10px",
     padding:"10px",
     marginTop:"10px",
-    boxShadow: "#3b3b3b 0px 4px 9px 0px",
+    boxShadow: "#f7a684 0px 4px 9px 0px",
+    color:"black"
   },
   title: {
     textAlign:"center",

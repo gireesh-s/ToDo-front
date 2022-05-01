@@ -28,22 +28,26 @@ const Header = ({history}) => {
 
   return (
     <>
-      <AppBar sx={{backgroundColor:"#4a4a4a"}}>
+      <AppBar sx={{backgroundColor:"#fe8691"}}>
           <Toolbar>
               <AddReactionIcon sx={{margin:"7px",display:{xl:"block",lg:"block",sm:"block",xs:"none"}}}/>
               <Typography variant='h5' style={{flexGrow:"1"}}>ToDo</Typography>
-              <AccountCircleIcon/>
-              { name && (<Typography>{name}</Typography>) }
-              <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              >
-                <ArrowDropDownIcon style={{color:"white"}}/>
-              </IconButton>
+              { isAuthenticated() && (
+                <>
+                  <AccountCircleIcon/>
+                  { name && (<Typography>{name}</Typography>) }
+                  <IconButton
+                  onClick={handleClick}
+                  size="small"
+                  sx={{ ml: 2 }}
+                  aria-controls={open ? 'account-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  >
+                    <ArrowDropDownIcon style={{color:"white"}}/>
+                  </IconButton>
+                </>
+              )}
           </Toolbar>
       </AppBar>
       <Menu
@@ -81,7 +85,7 @@ const Header = ({history}) => {
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      <Link to={`/profile/${isAuthenticated().user._id}`} style={{color:"black"}}>
+      <Link to={isAuthenticated() ? `/profile/${isAuthenticated().user._id}` : '/signin'} style={{color:"black"}}>
         <MenuItem>
           <Avatar /> Profile
         </MenuItem>
