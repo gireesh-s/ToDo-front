@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
+import { AppBar, Divider, IconButton, ListItem, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import { isAuthenticated, signoutApi } from '../../Pages/Auth/SignIn/SignInAPI/signInAPI';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Link } from 'react-router-dom'
+import KeyTwoToneIcon from '@mui/icons-material/KeyTwoTone';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import { Link, useHistory, useLocation } from 'react-router-dom'
 
-const Header = ({history}) => {
+const Header = () => {
+
+  const location = useLocation();
+  const history = useHistory()
 
   const [name, setName] = useState("")
 
@@ -34,8 +40,8 @@ const Header = ({history}) => {
               <Typography variant='h5' style={{flexGrow:"1"}}>ToDo</Typography>
               { isAuthenticated() && (
                 <>
-                  <AccountCircleIcon/>
-                  { name && (<Typography>{name}</Typography>) }
+                  <AccountCircleIcon/> &nbsp;
+                  { (<Typography>{name}</Typography>) }
                   <IconButton
                   onClick={handleClick}
                   size="small"
@@ -85,11 +91,45 @@ const Header = ({history}) => {
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      <Link to={isAuthenticated() ? `/profile/${isAuthenticated().user._id}` : '/signin'} style={{color:"black"}}>
-        <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
-      </Link>
+      {
+        isAuthenticated() &&
+        location.pathname !== "/" && (
+          <Link to={isAuthenticated() ? `/` : '/signin'} style={{color:"black"}}>
+            <MenuItem>
+              <ListItemIcon>
+                <HomeRoundedIcon fontSize='small'/>
+              </ListItemIcon>
+              Home
+            </MenuItem>
+          </Link>
+        )
+      }
+      {
+        isAuthenticated() &&
+        location.pathname !== `/profile/${isAuthenticated().user._id}` && (
+          <Link to={isAuthenticated() ? `/profile/${isAuthenticated().user._id}` : '/signin'} style={{color:"black"}}>
+            <MenuItem>
+              <ListItemIcon>
+                <PermIdentityIcon fontSize="small" />
+              </ListItemIcon>
+              Profile
+            </MenuItem>
+          </Link>
+        )
+      }
+      {
+        isAuthenticated() &&
+        location.pathname !== `/change/password/${isAuthenticated().user._id}` && (
+          <Link to={isAuthenticated() ? `/change/password/${isAuthenticated().user._id}` : '/signin'} style={{color:"black"}}>
+            <MenuItem>
+              <ListItemIcon>
+                <KeyTwoToneIcon fontSize="small" />
+              </ListItemIcon>
+              Change Password
+            </MenuItem>
+          </Link>
+        )
+      }
       <Divider />
       <MenuItem onClick={()=>signoutApi(()=>history.push("/signin"))}>
         <ListItemIcon>

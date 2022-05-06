@@ -1,4 +1,4 @@
-import { Box, Container, IconButton, TextField, Typography } from '@mui/material'
+import { Box, CircularProgress, Container, IconButton, TextField, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     paddingBottom:"25px"
   },
   box: {
-    backgroundColor:"#f7a684",
+    backgroundColor:"#ffb393",
     width:"100%",
     borderRadius:"10px",
     padding:"10px",
@@ -60,9 +60,11 @@ const ViewTodo = () => {
   const { token } = isAuthenticated();
   const userId = isAuthenticated().user._id
   const [toDoList, setToDoList] = useState([])
+  const [loading, setLoading] = useState(false)
   const classes = useStyles();
 
   const getTodo = () => {
+    setLoading(true)
     getToDoAPI( userId, token )
     .then((res) => {
       const { data } = res;
@@ -71,6 +73,7 @@ const ViewTodo = () => {
     .catch((err)=>{
       console.log(err)
     })
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -90,32 +93,39 @@ const ViewTodo = () => {
       <TextField label="Search" variant='filled' size='small' fullWidth className={classes.search}/>
       <Container className={classes.boxContainer}>
       {
-        toDoList.map((value)=>{
-          let formattedDate = moment(value.date).format('DD/MM/YYYY')
-          return (
-            <Box className={classes.box}>
-              <Typography variant='h5' className={classes.title}>{value.title}</Typography>
-              <Typography variant='h6' className={classes.desc}>{value.description}</Typography>
-              <div className={classes.ldtContainer}>
-                <Typography>{value.location}</Typography>
-                <div className={classes.dtContainer}>
-                  <Typography>{formattedDate}</Typography>
-                  <Typography sx={{marginLeft:"10px"}}>{value.time}</Typography>
-                </div>
-                <Link to={`/edit/${value._id}`}>
-                  <IconButton>
-                    <EditIcon/>
+        loading?
+        (
+          <Container>
+            <CircularProgress color="secondary" />
+          </Container>
+        )
+        :
+          toDoList.map((value)=>{
+            let formattedDate = moment(value.date).format('DD/MM/YYYY')
+            return (
+              <Box className={classes.box}>
+                <Typography variant='h5' className={classes.title}>{value.title}</Typography>
+                <Typography variant='h6' className={classes.desc}>{value.description}</Typography>
+                <div className={classes.ldtContainer}>
+                  <Typography>{value.location}</Typography>
+                  <div className={classes.dtContainer}>
+                    <Typography>{formattedDate}</Typography>
+                    <Typography sx={{marginLeft:"10px"}}>{value.time}</Typography>
+                  </div>
+                  <Link to={`/edit/${value._id}/${userId}`}>
+                    <IconButton>
+                      <EditIcon/>
+                    </IconButton>
+                  </Link>
+                  <IconButton
+                    onClick={() => deleteToDo(value._id)}
+                  >
+                    <DeleteIcon/>
                   </IconButton>
-                </Link>
-                <IconButton
-                  onClick={() => deleteToDo(value._id)}
-                >
-                  <DeleteIcon/>
-                </IconButton>
-              </div>
-            </Box>
-          )
-        })
+                </div>
+              </Box>
+            )
+          })
       }
       </Container>
     </Container>

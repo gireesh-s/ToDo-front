@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     margin:"auto",
     borderRadius:"25px",
     boxShadow: "#3b3b3b 0px 4px 9px 0px",
-    backgroundColor:"#dedede",
+    backgroundColor:"white",
     padding:"50px 20px"
   },
   gridItem: {
@@ -72,7 +72,7 @@ const Profile = () => {
           <img src={`${API}/read/photo/${userId}`} alt="img" style={{objectFit:"cover", width:"300px", height:"300px", borderRadius:"25px",boxShadow: "#3b3b3b 0px 4px 9px 0px",}}/>
         </Grid>
         <Grid item lg={6} sm={12} className={classes.gridItem}>
-          <Typography variant='h5'>{value.name}</Typography>
+          <Typography variant='h5' style={{color:"#fe8691"}}>{value.name}</Typography>
           <br/>
           <Typography>{value.email}</Typography>
           <Typography>{value.mobile}</Typography>
@@ -86,7 +86,9 @@ const Profile = () => {
           <Link to={`/edit/profile/${userId}`}>
             <Button variant='contained' color='secondary' style={{textTransform:"none"}}>Edit Profile</Button>
           </Link>
-          <Button variant='contained' color='success' style={{textTransform:"none", marginLeft:"10px"}}>Change Password</Button>
+          <Link to={`/change/password/${userId}`}>
+            <Button variant='contained' color='success' style={{textTransform:"none", marginLeft:"10px"}}>Change Password</Button>
+          </Link>
         </Grid>
       </Grid>
     </Container>
