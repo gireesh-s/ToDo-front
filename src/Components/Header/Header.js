@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
+import { AppBar, Divider, IconButton, ListItem, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import { isAuthenticated, signoutApi } from '../../Pages/Auth/SignIn/SignInAPI/signInAPI';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Link } from 'react-router-dom'
+import KeyTwoToneIcon from '@mui/icons-material/KeyTwoTone';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import { Link, useHistory, useLocation } from 'react-router-dom'
 
-const Header = ({history}) => {
+const Header = () => {
+
+  const location = useLocation();
+  const history = useHistory()
 
   const [name, setName] = useState("")
 
@@ -28,22 +34,26 @@ const Header = ({history}) => {
 
   return (
     <>
-      <AppBar sx={{backgroundColor:"#4a4a4a"}}>
+      <AppBar sx={{backgroundColor:"#fe8691"}}>
           <Toolbar>
               <AddReactionIcon sx={{margin:"7px",display:{xl:"block",lg:"block",sm:"block",xs:"none"}}}/>
               <Typography variant='h5' style={{flexGrow:"1"}}>ToDo</Typography>
-              <AccountCircleIcon/>
-              { name && (<Typography>{name}</Typography>) }
-              <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              >
-                <ArrowDropDownIcon style={{color:"white"}}/>
-              </IconButton>
+              { isAuthenticated() && (
+                <>
+                  <AccountCircleIcon/> &nbsp;
+                  { (<Typography>{name}</Typography>) }
+                  <IconButton
+                  onClick={handleClick}
+                  size="small"
+                  sx={{ ml: 2 }}
+                  aria-controls={open ? 'account-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  >
+                    <ArrowDropDownIcon style={{color:"white"}}/>
+                  </IconButton>
+                </>
+              )}
           </Toolbar>
       </AppBar>
       <Menu
@@ -81,11 +91,45 @@ const Header = ({history}) => {
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      <Link to={`/profile/${isAuthenticated().user._id}`} style={{color:"black"}}>
-        <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
-      </Link>
+      {
+        isAuthenticated() &&
+        location.pathname !== "/" && (
+          <Link to={isAuthenticated() ? `/` : '/signin'} style={{color:"black"}}>
+            <MenuItem>
+              <ListItemIcon>
+                <HomeRoundedIcon fontSize='small'/>
+              </ListItemIcon>
+              Home
+            </MenuItem>
+          </Link>
+        )
+      }
+      {
+        isAuthenticated() &&
+        location.pathname !== `/profile/${isAuthenticated().user._id}` && (
+          <Link to={isAuthenticated() ? `/profile/${isAuthenticated().user._id}` : '/signin'} style={{color:"black"}}>
+            <MenuItem>
+              <ListItemIcon>
+                <PermIdentityIcon fontSize="small" />
+              </ListItemIcon>
+              Profile
+            </MenuItem>
+          </Link>
+        )
+      }
+      {
+        isAuthenticated() &&
+        location.pathname !== `/change/password/${isAuthenticated().user._id}` && (
+          <Link to={isAuthenticated() ? `/change/password/${isAuthenticated().user._id}` : '/signin'} style={{color:"black"}}>
+            <MenuItem>
+              <ListItemIcon>
+                <KeyTwoToneIcon fontSize="small" />
+              </ListItemIcon>
+              Change Password
+            </MenuItem>
+          </Link>
+        )
+      }
       <Divider />
       <MenuItem onClick={()=>signoutApi(()=>history.push("/signin"))}>
         <ListItemIcon>

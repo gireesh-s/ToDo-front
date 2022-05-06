@@ -10,20 +10,20 @@ let theme = createTheme();
 
 const useStyles = makeStyles({
   mainContainer: {
-    backgroundColor: "#919191",
+    backgroundColor: "#f7a684",
     borderRadius:"10px",
     padding:"20px",
     paddingBottom:"40px",
-    boxShadow: "#3b3b3b 0px 4px 12px 0px",
+    boxShadow: "#f7a684 0px 4px 12px 0px",
   },
   textField: {
-    marginTop: "30px",
-    backgroundColor:"#ebebeb",
+    marginTop: "25px",
+    backgroundColor:"white",
     borderRadius:"7px",
   },
   dateTimeTextField: {
     marginTop: "30px",
-    backgroundColor:"#ebebeb",
+    backgroundColor:"white",
     borderRadius:"7px",
     width:"48.1%",
     [theme.breakpoints.down('xl')]: {
@@ -34,10 +34,10 @@ const useStyles = makeStyles({
     marginTop: "30px",
     height:"3rem",
     borderRadius:"7px",
-    backgroundColor:"#4a4a4a",
+    backgroundColor:"#dd4100",
     textTransform:"none",
     "&:hover":{
-      backgroundColor:"#3b3b3b"
+      backgroundColor:"#ff4b00",
     }
   }
 })
@@ -80,6 +80,8 @@ const AddTodo = () => {
       location,
     }).then((res) => {
       console.log(res)
+    }).catch((err)=>{
+      console.log(err)
     })
   }
 
@@ -110,13 +112,13 @@ const AddTodo = () => {
          className={classes.textField}
          style={{
            borderRadius:"8px",
-           backgroundColor:"#fff1f9"
+           backgroundColor:"white",
+           height:"35px"
          }}
         >
           <legend
            style={{
              borderRadius:"8px",
-             paddingTop:"10px",
              fontSize:"12px",
              fontFamily:"sans-serif"
            }}
@@ -133,7 +135,7 @@ const AddTodo = () => {
              padding:"5px",
              width:"100%", 
              border:"0",
-             backgroundColor:"#fff1f9"
+             backgroundColor:"white"
            }}
           />
         </fieldset>
@@ -141,13 +143,13 @@ const AddTodo = () => {
          className={classes.textField}
          style={{
            borderRadius:"8px",
-           backgroundColor:"#fff1f9"
+           backgroundColor:"white",
+           height:"35px"
          }}
         >
           <legend
            style={{
              borderRadius:"8px",
-             paddingTop:"10px",
              fontSize:"12px",
              fontFamily:"sans-serif"
            }}
@@ -164,7 +166,7 @@ const AddTodo = () => {
              padding:"5px",
              width:"100%", 
              border:"0",
-             backgroundColor:"#fff1f9"
+             backgroundColor:"white"
            }}
           />
         </fieldset>

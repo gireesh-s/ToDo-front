@@ -1,31 +1,34 @@
-import { Button, Container, TextField } from '@mui/material';
+import { Button, Container, IconButton, InputAdornment, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles'
 import React, { useState as UseState } from 'react'
 import { Redirect } from "react-router";
+import { Link } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import './signIn.css'
 import { clearJwt, signInAPI, userAuth } from './SignInAPI/signInAPI';
 
 const UseStyles = makeStyles({
     mainContainer: {
-      backgroundColor: "#919191",
+      backgroundColor: "#f7a684",
       borderRadius:"10px",
       padding:"20px",
       paddingBottom:"40px",
-      boxShadow: "#3b3b3b 0px 4px 12px 0px",
+      boxShadow: "#f7a684 0px 4px 12px 0px",
     },
     textField: {
       marginTop: "30px",
-      backgroundColor:"#ebebeb",
+      backgroundColor:"white",
       borderRadius:"7px",
     },
     btn: {
       marginTop: "30px",
       height:"3rem",
       borderRadius:"7px",
-      backgroundColor:"#4a4a4a",
+      backgroundColor:"#dd4100",
       textTransform:"none",
       "&:hover":{
-        backgroundColor:"#3b3b3b"
+        backgroundColor:"#ff4b00"
       }
     }
 })
@@ -44,6 +47,9 @@ const signIn = () => {
 
     const { email, password, error, success, loading, redirectTo } = values;
 
+    const [showPassword, setShowPassword] = UseState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
     const handleChange = (name) => (event) => {
       setValues({
@@ -99,6 +105,7 @@ const signIn = () => {
       <div className='signin-sub-container'>
     <Container className={classes.mainContainer}>
         <h1>Login</h1>
+        <Link to={'/signup'} style={{float:"right", color:"black", textDecoration:"underline"}}>Create New Account</Link>
         {redirectUser()}
       <form>
         <TextField
@@ -118,6 +125,21 @@ const signIn = () => {
          value={password}
          onChange={handleChange("password")}
          className={classes.textField}
+         type={showPassword ? "text" : "password"} //password shown and hide
+          InputProps={{
+            // <-- This is where the toggle button is added.
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <Button
          type="submit"
