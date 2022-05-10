@@ -5,7 +5,7 @@ import { isAuthenticated, signoutApi } from '../../Pages/Auth/SignIn/SignInAPI/s
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import MenuIcon from '@mui/icons-material/Menu';
 import KeyTwoToneIcon from '@mui/icons-material/KeyTwoTone';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { Link, useHistory, useLocation } from 'react-router-dom'
@@ -50,7 +50,7 @@ const Header = () => {
                   aria-haspopup="true"
                   aria-expanded={open ? 'true' : undefined}
                   >
-                    <ArrowDropDownIcon style={{color:"white"}}/>
+                    <MenuIcon style={{color:"white"}}/>
                   </IconButton>
                 </>
               )}

@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '@mui/material/Container'
 import { makeStyles } from '@mui/styles';
 import { Button, TextField } from '@mui/material';
 import { createTheme } from '@mui/system';
-import { putToDoAPI } from './EditTodoAPI/EditTodoAPI';
+import { putToDoAPI, readToDoAPI } from './EditTodoAPI/EditTodoAPI';
 import { isAuthenticated } from '../Auth/SignIn/SignInAPI/signInAPI';
 
 let theme = createTheme();
 
 const useStyles = makeStyles({
   mainContainer: {
-    backgroundColor: "#919191",
+    backgroundColor: "#f7a684",
     borderRadius:"10px",
     padding:"20px",
     paddingBottom:"40px",
@@ -35,10 +35,10 @@ const useStyles = makeStyles({
     marginTop: "30px",
     height:"3rem",
     borderRadius:"7px",
-    backgroundColor:"#4a4a4a",
+    backgroundColor:"#dd4100",
     textTransform:"none",
     "&:hover":{
-      backgroundColor:"#3b3b3b"
+      backgroundColor:"#ff4b00"
     }
   }
 })
@@ -62,6 +62,21 @@ const EditTodo = (props) => {
   })
   const { title, description, date, time, location, error, success, loading } = values;
   const classes = useStyles();
+
+  const getTodo = () => {
+    readToDoAPI( userId, todoId, token )
+    .then((res) => {
+      const { data } = res;
+      setValues(data)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  useEffect(()=>{
+    getTodo();
+  },[]);
 
   const handleChange = (name) => (event) => {
     setValues({
