@@ -17,3 +17,19 @@ export const putToDoAPI = ( userId, todoId, token, data, ) => {
         return err
     })
 }
+
+export const readToDoAPI = ( userId, todoId, token ) =>{
+    return axios({
+        method: "GET",
+        url: `${API}/read/one/todo/${userId}/${todoId}`,
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    .then((res)=>{
+        return res
+    })
+    .catch((err)=>{
+        return err
+    })
+}

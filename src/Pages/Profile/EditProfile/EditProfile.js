@@ -1,10 +1,8 @@
-import { Button, Container, createTheme, Icon, TextField } from '@mui/material';
+import { Button, Container, createTheme, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react'
 import { isAuthenticated } from '../../Auth/SignIn/SignInAPI/signInAPI';
 import { ProfileAPI } from '../ProfileAPI/ProfileAPI';
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import './EditProfile.css'
 import { updateProfileAPI } from './EditProfileAPI/EditProfileAPI';
 
@@ -59,6 +57,8 @@ const EditProfile = () => {
       mobile: "",
     })
 
+    const [photo, setPhoto] = useState(null)
+
     const { name, email, mobile } = value
 
     const readProfile = () => {
@@ -82,6 +82,12 @@ const EditProfile = () => {
         error: "",
         [name]: event.target.value,
       })
+      console.log(value)
+    }
+
+    const handleFile = (e) => {
+      const photo = e.target.files[0]
+      setPhoto(photo)
     }
 
     const updateProfile = (e) => {
@@ -103,7 +109,7 @@ const EditProfile = () => {
           <form onSubmit={updateProfile}>
             <p>
               <center>
-                <input type="file" id='upload' accept='image/*' style={{display:"none"}}/>
+                <input type="file" id='upload' accept='image/*' onChange={(e)=>handleFile(e)} style={{display:"none"}}/>
                 <label for="upload">
                   <div className='ep-avatar-container'>
                     <i class="fa-solid fa-user" style={{fontSize:"3rem", color:"gray"}}></i>
