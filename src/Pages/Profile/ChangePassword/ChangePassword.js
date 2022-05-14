@@ -42,10 +42,11 @@ const useStyles = makeStyles({
   }
 })
 
-const ChangePassword = () => {
+const ChangePassword = (props) => {
 
+  const { history } = props
   const { token } = isAuthenticated();
-  const userId = isAuthenticated().user._id;
+  const userId = props.match.params.userId;
   const email = isAuthenticated().user.email;
 
   const classes = useStyles();
@@ -72,6 +73,7 @@ const ChangePassword = () => {
           newPassword
       }).then((res)=>{
           console.log(res)
+          history.push(`/profile/${userId}`)
       }).catch((err)=>{
           console.log(err)
       })

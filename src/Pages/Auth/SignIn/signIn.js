@@ -103,6 +103,7 @@ const signIn = () => {
   return (
     <div className='signin-main-container'>
       <div className='signin-sub-container'>
+        Enter <b> Email: user11@gmail.com </b> & <b> Password: user11 </b> for your reference
     <Container className={classes.mainContainer}>
         <h1>Login</h1>
         <Link to={'/signup'} style={{float:"right", color:"black", textDecoration:"underline"}}>Create New Account</Link>
