@@ -9,7 +9,7 @@
 }
 .signup-main-container .signup-sub-container h1 {
     font-weight: 1;
-    color: black;
+    color: white;
 }
 @media (max-width:1200px) {
     .signup-sub-container {

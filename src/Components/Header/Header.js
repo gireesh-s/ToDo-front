@@ -34,7 +34,7 @@ const Header = () => {
 
   return (
     <>
-      <AppBar sx={{backgroundColor:"#fe8691"}}>
+      <AppBar sx={{backgroundColor:"orange"}}>
           <Toolbar>
               <AddReactionIcon sx={{margin:"7px",display:{xl:"block",lg:"block",sm:"block",xs:"none"}}}/>
               <Typography variant='h5' style={{flexGrow:"1"}}>ToDo</Typography>

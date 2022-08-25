@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     position:"relative",
     transition: "transform 0.5s ease-out 0s",
     overflowY:"auto",
-    paddingBottom:"25px"
+    paddingBottom:"25px",
   },
   box: {
     backgroundColor:"#ffb393",
@@ -31,8 +31,9 @@ const useStyles = makeStyles({
     borderRadius:"10px",
     padding:"10px",
     marginTop:"10px",
-    boxShadow: "#f7a684 0px 4px 9px 0px",
-    color:"black"
+    boxShadow: "black 0px 4px 9px 0px",
+    color:"black",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
   },
   title: {
     textAlign:"center",
