@@ -1,7 +1,7 @@
 import { Button, Container, IconButton, InputAdornment, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState as UseState } from 'react';
-import { useHistory as UseHistory } from "react-router-dom";
+import { Link, useHistory as UseHistory } from "react-router-dom";
 import './signUp.css'
 import { signUpAPI } from './SignUpAPI/SignUpAPI';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -9,11 +9,11 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const UseStyles = makeStyles({
   mainContainer: {
-    backgroundColor: "#f7a684",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     borderRadius:"10px",
     padding:"20px",
     paddingBottom:"40px",
-    boxShadow: "#f7a684 0px 4px 12px 0px",
+    boxShadow: "black 0px 4px 12px 0px",
   },
   textField: {
     marginTop: "30px",
@@ -96,6 +96,7 @@ const signUp = () => {
       <div className='signup-sub-container'>
     <Container className={classes.mainContainer}>
         <h1>Create an Account</h1>
+        <Link to={'/signin'} style={{float:"right", color:"white", textDecoration:"underline"}}>Already have an account</Link>
       <form>
         <TextField
          variant='filled'

@@ -10,11 +10,11 @@ import { clearJwt, signInAPI, userAuth } from './SignInAPI/signInAPI';
 
 const UseStyles = makeStyles({
     mainContainer: {
-      backgroundColor: "#f7a684",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
       borderRadius:"10px",
       padding:"20px",
       paddingBottom:"40px",
-      boxShadow: "#f7a684 0px 4px 12px 0px",
+      boxShadow: "black 0px 4px 12px 0px",
     },
     textField: {
       marginTop: "30px",
@@ -103,10 +103,10 @@ const signIn = () => {
   return (
     <div className='signin-main-container'>
       <div className='signin-sub-container'>
-        Enter <b> Email: user11@gmail.com </b> & <b> Password: user11 </b> for your reference
+        {/* <span style={{color:'#36ff62'}}>Enter <b> Email: user11@gmail.com </b> & <b> Password: user11 </b> for your reference</span> */}
     <Container className={classes.mainContainer}>
         <h1>Login</h1>
-        <Link to={'/signup'} style={{float:"right", color:"black", textDecoration:"underline"}}>Create New Account</Link>
+        <Link to={'/signup'} style={{float:"right", color:"white", textDecoration:"underline"}}>Create New Account</Link>
         {redirectUser()}
       <form>
         <TextField

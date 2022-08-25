@@ -10,7 +10,8 @@ let theme = createTheme();
 
 const useStyles = makeStyles({
   mainContainer: {
-    backgroundColor: "#f7a684",
+    // backgroundColor: "#f7a684",
+    backgroundColor: "rgba(0,0,0, 0.4)",
     borderRadius:"10px",
     padding:"20px",
     paddingBottom:"40px",
